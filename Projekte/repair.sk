@@ -1,0 +1,9 @@
+#Script by Kilian8797
+#
+#Kilian8797#7027 Discord Tag
+
+command /repair:
+    permission: repair.use
+    trigger:
+        repair tool of player
+        send "&7Dein Werkzeug wurde repariert."

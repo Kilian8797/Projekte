@@ -1,0 +1,58 @@
+#Script by Kilian8797
+#
+#Kilian8797#7027 Discord Tag
+
+options:
+	Prefix: &fDeinServer &7
+	Suffix: Dazu hast du keine Rechte!
+
+command /rename [<text>]:
+    permission: rename.use
+    permission message: {@Suffix}
+    trigger:
+        if arg 1 is not set:
+            send "{@Prefix}Benutze &b/rename (text)&7."
+        else:
+            if player's tool is air:
+                send "{@Prefix}Du musst ein Item in der Hand halten!"
+            else:
+                set name of player's tool to colored arg 1
+                send "{@Prefix}Dein item wurde zu %colored arg-1%&r&7 umbenannt!"
+ 
+command /lore [<text>]:
+	permission: lore.use
+	permission message: {@Suffix}
+	trigger:
+		if arg 1 is not set:
+			send "{@Prefix}Benutze &b/lore (text)&7."
+		else:
+			if player's tool is air:
+				send "{@Prefix}Du musst ein Item in der Hand halten!"
+			else:
+				set lore of player's tool to colored arg 1
+				send "{@Prefix}Lore gesetzt zu: %colored arg-1%"
+                
+
+command /enchant [<enchantment type>]:
+    permission: enchant.use
+    permission message: {@Suffix}
+    trigger:
+        if arg 1 is not set:
+            send "{@Prefix}Benutze &b/enchant (Verzauberung)"
+        else:
+            if player's tool is air:
+                send "{@Prefix}Du musst ein Item in der Hand halten!"
+            else:
+                enchant player's tool with arg 1
+                send "{@Prefix}Das item wurde veraubert!"
+				
+command /unbreakable:
+	aliases: ub
+	permission: unbreak.use
+	permission message: {@Suffix}
+	trigger:
+		if player's tool is air:
+			send "{@Prefix}Du musst ein Item in der Hand halten!"
+		else:
+			set player's tool to unbreakable player's tool
+			send "{@Prefix}Dein Item ist nun unzerstörbar"

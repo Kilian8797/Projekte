@@ -1,0 +1,30 @@
+#Script by Kilian8797
+#
+#Kilian8797#7027 Discord Tag
+
+Chat with emojis
+
+on chat:
+	replace all ":heart:" in message with "&b❤&r"
+	replace all ":laugh:" in message with "&b:D&r"
+	replace all ":sad:" in message with "&b:(&r"
+	replace all ":smile:" in message with "&b:)&r"
+	replace all ":okay:" in message with "&b:/&r"
+	replace all ":cute:" in message with "&b:3&r"
+	replace all ":rage:" in message with "&b:c&r"
+	replace all ":x:" in message with "&b✘&r"
+		
+command /emoji:
+	usage: &d&lSystem &8| &a/emoji
+	aliases: /emojis
+	trigger:
+		message "&d&lSystem &8| &7Emojis&8:"
+		message ""
+		message "&8» &a:heart: &8= &b❤&r"
+		message "&8» &a:laugh: &8= &b:D"
+		message "&8» &a:sad: &8= &b:("
+		message "&8» &a:smile: &8= &b:)"
+		message "&8» &a:okay: &8= &b:/"
+		message "&8» &a:cute: &8= &b:3"
+		message "&8» &a:rage: &8= &b:c"
+		message "&8» &a:x: &8= &b✘"

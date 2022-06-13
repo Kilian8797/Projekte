@@ -1,0 +1,10 @@
+#Script by Kilian8797
+#
+#Kilian8797#7027 Discord Tag
+
+command /ping [<player>]:
+    trigger:
+        if arg 1 is set:
+            send "&7Der Ping von %arg 1%: %arg-1's ping%"
+        else:
+            send "&7Dein Ping: %player's ping%"

@@ -1,0 +1,15 @@
+#Script by Kilian8797
+#
+#Kilian8797#7027 Discord Tag
+
+command /day:
+    permission: day.use
+    trigger:
+        send "Es ist nun Tag!"
+        set time to 08:00
+        
+command /night:
+    permission: night.use 
+    trigger:
+        send "Es ist nun Nacht!"
+        set time to 24:00

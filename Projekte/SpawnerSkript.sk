@@ -1,0 +1,145 @@
+#Script by Kilian8797
+#
+#Kilian8797#7027 Discord Tag
+
+options:
+	Prefix: &8[&6Spawner&8]
+	
+on place of mob spawner:
+	wait 10 ticks
+	if event-block is mob spawner:
+		set {spawner.owner.%location of event-block%.%world%} to player
+		send "{@Prefix} &aDu hast denn Spawner platziert!"
+		send "{@Prefix} &7Spawner Inhaber: &e%player%"
+		play "CLICK" to player
+		set {spawner.mob.%location of event-block%.%world%} to "Schwein"
+	else:
+		send "{@Prefix} &cDir fehlen folgende Berechtigung: &6Platzierung"
+		
+on break of mob spawner:
+	if {spawner.owner.%location of event-block%.%world%} is player:
+		set {spawnerdrop.%player%.temp} to location of event-block
+		wait 0.1 ticks
+		delete {spawner.owner.%location of event-block%.%world%}
+		drop 1 mob spawner named "&8» &6Spawner" at {spawnerdrop.%player%.temp}
+		wait 0.1 ticks
+		delete {spawnerdrop.%player%.temp}
+	else:
+		if player has permission "spawner.break.other":
+			set {spawnerdrop.%player%.temp} to location of event-block
+			wait 0.1 ticks
+			delete {spawner.owner.%location of event-block%.%world%}
+			drop 1 mob spawner named "&8» &6Spawner" at {spawnerdrop.%player%.temp}
+			wait 0.1 ticks
+			delete {spawnerdrop.%player%.temp}
+		else:
+			send "{@Prefix} &cDir fehlen folgende Berechtigung: &6spawner.break.other"
+			cancel event
+		
+on rightclick on mob spawner:
+	if {spawner.owner.%location of event-block%.%world%} is player:
+	
+		open chest with 4 rows named "&8» &6Spawner" to player
+		
+		set {spawner.clicked.%player%} to location of event-block
+		set {spawner.clicked.2.%player%} to player's world
+		
+		wait 0.1 ticks
+		set {count.%player%} to 0
+		loop 36 times:
+			set slot {count.%player%} of player's current inventory to black glass named " "
+			add 1 to {count.%player%}
+		wait 0.1 ticks
+		delete {count.%player%}
+		
+		set slot 11 of player's current inventory to blue glass named " "
+		set slot 20 of player's current inventory to blue glass named " "
+		
+		set slot 10 of player's current inventory to mob spawner named "&8» &6Umsetzung des Tieres/ Monsters"
+		set slot 19 of player's current inventory to barrier named "&8» &c/"
+		
+		set slot 12 of player's current inventory to 383:90 named "&8» &fSchwein" with lore "||&8➡ &7Status: &eFreigeschaltet"
+		if player has permission "spawner.mob.cow":
+			set slot 13 of player's current inventory to 383:92 named "&8» &eKuh" with lore "||&8➡ &7Status: &eFreigeschaltet"
+		else:
+			set slot 13 of player's current inventory to 383:92 named "&8» &cKuh" with lore "||&8➡ &7Status: &cNicht freigeschaltet"
+		if player has permission "spawner.mob.sheep":
+			set slot 14 of player's current inventory to 383:91 named "&8» &eSchaf" with lore "||&8➡ &7Status: &eFreigeschaltet"
+		else:
+			set slot 14 of player's current inventory to 383:91 named "&8» &cSchaf" with lore "||&8➡ &7Status: &cNicht freigeschaltet"
+		if player has permission "spawner.mob.zombie":
+			set slot 15 of player's current inventory to 383:54 named "&8» &eZombie" with lore "||&8➡ &7Status: &eFreigeschaltet"
+		else:
+			set slot 15 of player's current inventory to 383:54 named "&8» &cZombie" with lore "||&8➡ &7Status: &cNicht freigeschaltet"
+		if player has permission "spawner.mob.skelett":
+			set slot 16 of player's current inventory to 383:51 named "&8» &eSkelett" with lore "||&8➡ &7Status: &eFreigeschaltet"
+		else:
+			set slot 16 of player's current inventory to 383:51 named "&8» &cSkelett" with lore "||&8➡ &7Status: &cNicht freigeschaltet"
+	else:
+		send "{@Prefix} &cDir fehlen folgende Berechtigung: &6Öffnung von anderen Spawnern"
+		
+on inventory click:
+	if inventory name of player's current inventory is "&8» &6Spawner":
+		cancel event
+		clicked slot is 12:
+			if {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} is "Schwein":
+				send "{@Prefix} &7Der Spawner steht bereits auf &eSchwein&7!"
+			else:
+				set {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} to "Schwein"
+				set mob type of spawner target block to "Pig"
+				send "{@Prefix} &7Der Spawner ist nun auf &eSchwein&7!"
+				close player's inventory
+				play "LEVEL_UP" to player
+		clicked slot is 13:
+			if {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} is "Kuh":
+				send "{@Prefix} &7Der Spawner steht bereits auf &eKuh&7!"
+			else:
+				if player has permission "spawner.mob.cow":
+					set {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} to "Kuh"
+					set mob type of spawner target block to "Cow"
+					send "{@Prefix} &7Der Spawner ist nun auf &eKuh&7!"
+					close player's inventory
+					play "LEVEL_UP" to player
+				else:
+					send "{@Prefix} &cDazu fehlen dir folgende Berechtigung: &6spawner.mob.cow"
+		clicked slot is 14:
+			if {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} is "Schaf":
+				send "{@Prefix} &7Der Spawner steht bereits auf &eSchaf&7!"
+			else:
+				if player has permission "spawner.mob.sheep":
+					set {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} to "Schaf"
+					set mob type of spawner target block to "Sheep"
+					send "{@Prefix} &7Der Spawner ist nun auf &eSchaf&7!"
+					close player's inventory
+					play "LEVEL_UP" to player
+				else:
+					send "{@Prefix} &cDazu fehlen dir folgende Berechtigung: &6spawner.mob.sheep"
+		clicked slot is 15:
+			if {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} is "Zombie":
+				send "{@Prefix} &7Der Spawner steht bereits auf &eZombie&7!"
+			else:
+				if player has permission "spawner.mob.zombie":
+					set {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} to "Zombie"
+					set mob type of spawner target block to "Zombie"
+					send "{@Prefix} &7Der Spawner ist nun auf &eZombie&7!"
+					close player's inventory
+					play "LEVEL_UP" to player
+				else:
+					send "{@Prefix} &cDazu fehlen dir folgende Berechtigung: &6spawner.mob.zombie"
+		clicked slot is 16:
+			if {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} is "Skelett":
+				send "{@Prefix} &7Der Spawner steht bereits auf &eSkelett&7!"
+			else:
+				if player has permission "spawner.mob.skelett":
+					set {spawner.mob.%{spawner.clicked.%player%}%.%{spawner.clicked.2.%player%}%} to "Skelett"
+					set mob type of spawner target block to "Skeleton"
+					send "{@Prefix} &7Der Spawner ist nun auf &eSkelett&7!"
+					close player's inventory
+					play "LEVEL_UP" to player
+				else:
+					send "{@Prefix} &cDazu fehlen dir folgende Berechtigung: &6spawner.mob.skelett"
+				
+on inventory close:
+	if inventory name of player's current inventory is "&8» &6Spawner":
+		delete {spawner.clicked.%player%} 
+		delete {spawner.clicked.2.%player%} 

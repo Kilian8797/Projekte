@@ -1,0 +1,11 @@
+#Script by Kilian8797
+#
+#Kilian8797#7027 Discord Tag
+
+command /head [<offlineplayer>]:
+    trigger:
+        if arg 1 is set:
+            give 1 of skull of "%arg 1%" parsed as offline player named "&7Kopf von &e%arg 1%" to the player
+            send "&7Du hast den Kopf von %arg 1% erhalten!"
+        else:
+            send "&7Bitte gebe einen Namen an!"
